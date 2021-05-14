@@ -15,6 +15,8 @@ const body = document.querySelector('body');
 //  FETCH FUNCTION
 // ------------------------------------------
 
+//Obtains data from the API. Once parsed, the card generation function is called
+//on the results property of the response object.
     fetch(randomUsersUrl)
     .then(response => response.json())
     .then(data => {
@@ -25,6 +27,13 @@ const body = document.querySelector('body');
 // ------------------------------------------
 //  HELPER FUNCTIONS
 // ------------------------------------------
+
+/**
+ * generatePerson
+ * Iterates over the array of people objects to generate profiles, modal card details, and listeners.
+ *
+ * @param {person} Object - a person object that contains properties related to personal information
+ */
 
 function generatePerson(person) {
     let personCard = `
@@ -49,7 +58,7 @@ function generatePerson(person) {
     //Formatting for phone numbers
     const normalizedPhone = `(${person.phone.substring(1,4)}) ${person.phone.substring(6, 14)}`;
 
-    
+    //Formatting for modal card that appears on click
     const modalCard = `
     <div class="modal-container">
         <div class="modal">
@@ -68,20 +77,31 @@ function generatePerson(person) {
     </div> 
     `
 
+    //Since this code will be fed into an iterating function (forEach),
+    //'card' is referring to the most recent profile added to the DOM (last-child)
     let card = document.querySelector('.card:last-child');
 
-
+    //Listeners on the main profile card and modal card
     card.addEventListener("click", event => {
+        //Modal is added to the DOM on click
         body.insertAdjacentHTML('beforeend',modalCard);
 
         document.querySelector('.modal-container').addEventListener('click', (event) =>{
             if(event.target.textContent === 'X'){
+                //Modal is removed from the DOM upon close
                 document.querySelector('.modal-container').remove();
             }
         });
 
     });
 }
+
+/**
+ * generateCards
+ * Iterates over the array of people objects to generate profiles, modal card details, and listeners.
+ *
+ * @param {people} Array - an array of objects containing user data
+ */
 
 function generateCards(people) {
     people.forEach(person => {
