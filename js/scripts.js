@@ -40,6 +40,15 @@ function generatePerson(person) {
     </div>`
     gallery.insertAdjacentHTML("beforeend", personCard);
 
+    //Formatting for date of birth
+    const month = person.dob.date.substring(5, 7);
+    const day = person.dob.date.substring(8, 10);
+    const year = person.dob.date.substring(0, 4);
+    const normalizedDob = `${month}/${day}/${year}`
+
+    //Formatting for phone numbers
+    const normalizedPhone = `(${person.phone.substring(1,4)}) ${person.phone.substring(6, 14)}`;
+
     
     const modalCard = `
     <div class="modal-container">
@@ -51,9 +60,9 @@ function generatePerson(person) {
                 <p class="modal-text">${person.email}</p>
                 <p class="modal-text cap">${person.location.city}</p>
                 <hr>
-                <p class="modal-text">${person.phone}</p>
+                <p class="modal-text">${normalizedPhone}</p>
                 <p class="modal-text">${person.location.street.number} ${person.location.street.name}, ${person.location.city}, ${person.location.state} ${person.location.postcode}</p>
-                <p class="modal-text">Birthday: ${person.dob.date}</p>
+                <p class="modal-text">Birthday: ${normalizedDob}</p>
             </div>
         </div>
     </div> 
